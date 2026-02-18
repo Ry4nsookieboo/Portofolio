@@ -1,0 +1,58 @@
+main {
+  width: 100%;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Header navbar smooth transitions */
+header {
+  transform: translateZ(0);
+}
+
+/* Improve performance with will-change */
+section {
+  will-change: auto;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  body {
+    font-size: 16px; /* Prevent zoom on input focus */
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  header,
+  footer {
+    display: none;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+}
