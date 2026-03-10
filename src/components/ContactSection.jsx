@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Mail, Linkedin, Github, Download, Send } from 'lucide-react'
-import cvPdf from '../../CV/CV_Ryan.pdf'
+import cvPdf from '../../CV/CV-Ryan.pdf'
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -165,7 +165,7 @@ export default function ContactSection() {
                 onClick={() => {
                   const link = document.createElement('a')
                   link.href = cvPdf
-                  link.download = 'CV_Ryan.pdf'
+                  link.download = 'CV-Ryan.pdf'
                   document.body.appendChild(link)
                   link.click()
                   document.body.removeChild(link)
