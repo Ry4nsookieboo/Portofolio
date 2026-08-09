@@ -1,448 +1,215 @@
 'use client';
 
 import * as React from 'react'
-import { ExternalLink, Github, X, ChevronLeft, ChevronRight } from 'lucide-react'
-// import Img from '../assets/Project/IoT.png'
-// import Img2 from '../assets/Project/IoT.jpeg'
-// import Img3 from '../assets/Project/GYM1.png'
-// import Img4 from '../assets/Project/GYM2.png'
-// import Img5 from '../assets/Project/GYM3.png'
-// import Img6 from '../assets/Project/GYM4.png'
-// import Img7 from '../assets/Project/GYM5.png'
-// import Img8 from '../assets/Project/kindegarten1.png'
-// import Img9 from '../assets/Project/kindegarten2.png'
-// import Img10 from '../assets/Project/tarumenyan.png'
-// import Img11 from '../assets/Project/tarumenyan2.png'
-// import Img12 from '../assets/Project/Sonnet1.png'
-// import Img13 from '../assets/Project/Sonnet2.png'
-// import Img14 from '../assets/Project/Sonnet3.png'
-// import Img15 from '../assets/Project/portofolio1.png'
-// import Img16 from '../assets/Project/portofolio2.png'
-// import Img17 from '../assets/Project/portofolio3.png'
+import { createPortal } from 'react-dom'
+import { AlertTriangle, ChevronLeft, ChevronRight, Github, LockKeyhole, Maximize2, X } from 'lucide-react'
 
-
-const asset = (p) => new URL(`../assets/${p}`, import.meta.url).href
+const asset = (name) => new URL(`../assets/${name}`, import.meta.url).href
+const projectAsset = (directory, name) => `${import.meta.env.BASE_URL}projects/${directory}/${encodeURIComponent(name)}`
 
 const projects = [
   {
-    id: 1,
-    title: 'IoT Orange Sorting System — Engineering Project',
-    description: 'IoT-based conveyor system designed to automatically sort oranges by weight using embedded sensors with real-time monitoring and data reporting.',
-    image: asset('IoT.png'),
+    id: 'noelle',
+    title: 'NOELLEOS',
+    type: 'Private AI Companion',
+    description: 'An evolving desktop AI companion that brings conversational intelligence, long-term memory, voice interaction, and a Live2D avatar together in a coherent local-first system.',
+    images: [
+      ...[1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15].map((number) => projectAsset('noelle', `noelleos (${number}).png`)),
+      projectAsset('noelle', 'Voice training.jpeg'),
+    ],
+    tech: ['Python', 'System Architecture', 'Text-to-Speech (TTS)', 'Generative AI', 'API Integration'],
+    private: true,
+  },
+  {
+    id: 'iot',
+    title: 'IoT Orange Sorting System',
+    type: 'Engineering Project',
+    description: 'An IoT-based conveyor system that sorts oranges by weight with embedded sensors, real-time monitoring, and data reporting.',
     images: [asset('IoT.png'), asset('IoT.jpeg')],
-    tech:['React', 'Firebase', 'Express.js', 'ESP8266', 'C++','Tailwind CSS'],
-    problemSolution: 'Developed embedded logic in C++ using ESP8266 and load cell sensors, streamed measurement data to Firebase, built a React monitoring dashboard, and implemented an Express.js service to export sorting data into CSV reports.',
+    tech: ['React.js', 'Firebase', 'Express.js', 'Embedded Systems', 'C++', 'Tailwind CSS'],
     githubLink: 'https://github.com/Ry4nsookieboo/iot-conveyor-sorting-system-esp8266',
   },
   {
-    id: 2,
-    title: 'Sonnet Weather — Weather and Diary Mobile App',
-    description: 'A personal mobile application combining weather forecasting with journaling to capture daily reflections alongside environmental conditions.',
-    image: asset('Sonnet1.png'),
-    images: [asset('Sonnet1.png'), asset('Sonnet2.png'), asset('Sonnet3.png')],
-    tech: ['React Native', 'Supabase', 'Open Meteo API','JavaScript','CSS'],
-    problemSolution: 'Implemented location-based weather data from Open Meteo API, dynamic weather icons adapting to time and conditions, and persistent diary storage using Supabase.',
+    id: 'sonnet',
+    title: 'Sonnet Weather',
+    type: 'Weather & Diary Mobile App',
+    description: 'A personal mobile app that combines weather forecasting with journaling, helping users capture daily reflections alongside local conditions.',
+    images: Array.from({ length: 18 }, (_, index) => projectAsset('sonnet', `sonnet (${index + 1}).png`)),
+    tech: ['React Native', 'Supabase (PostgreSQL)', 'REST APIs', 'JavaScript'],
     githubLink: 'https://github.com/Ry4nsookieboo/Sonnet-Weather_Ry4n',
   },
   {
-    id: 3,
-    title: 'Personal Trainer Consulting — Mobile App',
-    description: 'Mobile personal trainer application featuring trainer-member communication and AI-assisted chatbot focused on health and workout discussions',
-    image: asset('GYM1.png'),
-    images: [asset('GYM1.png'), asset('GYM2.png'), asset('GYM3.png'), asset('GYM4.png'), asset('GYM5.png')],
-    tech: ['React Native', '.NET', 'Supabase', 'WebSocket', 'OpenAI API' ],
-    problemSolution: 'Built real-time messaging using WebSocket, implemented environment-based configuration (.env), integrated ChatGPT API with controlled domain context, and handled backend communication.',
+    id: 'trainer',
+    title: 'Personal Trainer Consulting',
+    type: 'Mobile Application',
+    description: 'A personal-training application for trainer-member communication and focused AI-assisted health and workout discussions.',
+    images: Array.from({ length: 8 }, (_, index) => projectAsset('mmm', `mmm (${index + 1}).png`)),
+    tech: ['React Native', '.NET', 'Supabase (PostgreSQL)', 'API Integration'],
     githubLink: 'https://github.com/Ry4nsookieboo/personal-trainer-app',
   },
   {
-    id: 4,
-    title: 'Tarumenyan — Photography Bussiness Website',
-    description: 'Custom portfolio and booking website developed for a photography business to manage galleries and client inquiries.',
-    image: asset('tarumenyan2.png'),
-    images: [asset('tarumenyan2.png'), asset('tarumenyan2.png')],
-    tech: ['React (Vite)', 'MySQL', 'Node.js', 'Tailwind CSS'],
-    problemSolution: 'Developed responsive UI and backend logic for content management and booking workflow.',
+    id: 'tarumenyan',
+    title: 'Tarumenyan',
+    type: 'Photography Business Website',
+    description: 'A custom photography portfolio and booking website for presenting galleries and guiding client inquiries.',
+    images: Array.from({ length: 11 }, (_, index) => projectAsset('tarumenyan', `trm (${index + 1}).png`)),
+    tech: ['React.js', 'Node.js', 'MySQL', 'Tailwind CSS'],
     githubLink: 'https://github.com/Ry4nsookieboo/Website-Tarumenyan',
   },
   {
-    id: 5,
-    title: 'Kindergarten Website (UI Contribution) — Bussiness Website',
-    description: 'Collaborative web project contributing to UI development and data-driven content structure for a kindergarten website.',
-    image: asset('kindegarten1.png'),
-    images: [asset('kindegarten1.png'), asset('kindegarten2.png')],
-    tech: ['Eleventy', 'HTML', 'CSS', 'JSON'],
-    problemSolution: 'Designed interface components and structured teacher data using JSON-based content management.',
+    id: 'kindergarten',
+    title: 'Kindergarten Website',
+    type: 'UI Contribution',
+    description: 'A collaborative website project with UI development and structured, data-driven content for a kindergarten.',
+    images: [projectAsset('kindegarten', 'uls (1).png'), projectAsset('kindegarten', 'uls (2).png')],
+    tech: ['JavaScript', 'HTML', 'CSS', 'Data Visualization'],
     githubLink: 'https://github.com/Ry4nsookieboo/kindergarten-website',
   },
   {
-    id: 6,
-    title: 'Personal Portfolio — Portofolio Website',
-    description: 'Interactive portfolio website built to present projects, technical skills, and development journey.',
-    image: asset('portofolio3.png'),
-    images: [asset('portofolio3.png'), asset('portofolio3.png'), asset('portofolio3.png')],
-    tech: ['React (Vite)', 'Tailwind CSS'],
-    problemSolution: 'Developed a responsive portfolio interface with a clear layout and performance-focused design.',
+    id: 'portfolio',
+    title: 'Personal Portfolio',
+    type: 'Portfolio Website',
+    description: 'An interactive portfolio that presents selected projects, technical skills, and an ongoing development journey.',
+    images: [asset('portofolio1.png'), asset('portofolio2.png'), asset('portofolio3.png')],
+    tech: ['React.js', 'TypeScript', 'Tailwind CSS'],
     githubLink: 'https://github.com/Ry4nsookieboo/Portofolio',
   },
-] 
+]
 
 export default function ProjectsSection() {
-  const [indices, setIndices] = React.useState(() => {
-    const map = {}
-    projects.forEach(p => { map[p.id] = 0 })
-    return map
-  })
-  const [modalProjectId, setModalProjectId] = React.useState(null)
-  const [modalIndex, setModalIndex] = React.useState(0)
-  const [hoveredId, setHoveredId] = React.useState(null)
-  const [pressedId, setPressedId] = React.useState(null)
-  const [clickRipples, setClickRipples] = React.useState({})
+  const [indices, setIndices] = React.useState(() => Object.fromEntries(projects.map((project) => [project.id, 0])))
+  const [modal, setModal] = React.useState(null)
+  const [privateDialogOpen, setPrivateDialogOpen] = React.useState(false)
+
   React.useEffect(() => {
-    if (modalProjectId) return
-    const t = setInterval(() => {
-      setIndices(prev => {
-        const next = { ...prev }
-        projects.forEach(p => {
-          const len = (p.images && p.images.length) || 0
-          if (len > 0) next[p.id] = (prev[p.id] + 1) % len
-        })
-        return next
-      })
-    }, 2000)
-    return () => clearInterval(t)
-  }, [modalProjectId])
-  const openModal = (project) => {
-    setModalProjectId(project.id)
-    setModalIndex(indices[project.id] || 0)
-  }
-  const closeModal = () => {
-    if (modalProjectId != null) {
-      setIndices(prev => ({ ...prev, [modalProjectId]: modalIndex }))
+    if (modal) return undefined
+    const timer = window.setInterval(() => {
+      setIndices((current) => Object.fromEntries(projects.map((project) => [
+        project.id,
+        ((current[project.id] || 0) + 1) % project.images.length,
+      ])))
+    }, 4200)
+    return () => window.clearInterval(timer)
+  }, [modal])
+
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setModal(null)
+        setPrivateDialogOpen(false)
+      }
+      if (!modal) return
+      if (event.key === 'ArrowLeft') changeModalImage(-1)
+      if (event.key === 'ArrowRight') changeModalImage(1)
     }
-    setModalProjectId(null)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modal])
+
+  const changeImage = (project, direction) => {
+    setIndices((current) => ({
+      ...current,
+      [project.id]: (current[project.id] + direction + project.images.length) % project.images.length,
+    }))
   }
-  const navigateModal = (dir) => {
-    const project = projects.find(p => p.id === modalProjectId)
-    if (!project || !project.images || project.images.length === 0) return
-    const len = project.images.length
-    const next = (modalIndex + (dir === 'next' ? 1 : -1) + len) % len
-    setModalIndex(next)
+
+  const changeModalImage = (direction) => {
+    setModal((current) => {
+      if (!current) return current
+      const nextIndex = (current.index + direction + current.project.images.length) % current.project.images.length
+      return { ...current, index: nextIndex }
+    })
   }
+
+  const openGallery = (project) => setModal({ project, index: indices[project.id] || 0 })
+
   return (
-    <section id="projects" className="section" style={{ position: 'relative', zIndex: 2 }}>
+    <section id="projects" className="section presentation-section" style={{ position: 'relative', zIndex: 2 }}>
       <div className="container">
-        <h2 className="section-title animate-slide-up" style={{
-          fontSize: '3rem',
-          marginBottom: '48px',
-          background: 'linear-gradient(135deg, #ffffff 0%, #00d9ff 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-        }}>
-          Featured Projects
-        </h2>
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">Selected work</p>
+          <h2>Projects built around real use.</h2>
+        </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '32px',
-        }}>
-          {projects.map((project, index) => (
-            <div key={project.id} className="card animate-slide-up" style={{
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              animationDelay: `${index * 0.1}s`,
-            }}>
-              <div
-               style={{
-                width: '100%',
-                height: '200px',
-                overflow: 'hidden',
-                marginBottom: '16px',
-                borderRadius: '8px',
-                backgroundColor: 'var(--bg-dark)',
-                position: 'relative',
-              }}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
+        <div className="project-list">
+          {projects.map((project, index) => {
+            const imageIndex = indices[project.id] || 0
+            return (
+              <article
+                key={project.id}
+                className={`project-showcase ${index % 2 ? 'project-showcase--reverse' : ''}`}
+                data-reveal
+                style={{ '--reveal-delay': `${Math.min(index * 70, 280)}ms` }}
               >
-                <img
-                  src={(project.images && project.images[indices[project.id]]) || project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                    cursor: 'pointer',
-                    filter: hoveredId === project.id ? 'blur(2px)' : 'none',
-                    transitionProperty: 'transform, filter',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  onClick={(e) => {
-                    const rect = e.currentTarget.parentElement.getBoundingClientRect()
-                    const x = e.clientX - rect.left
-                    const y = e.clientY - rect.top
-                    const key = Date.now()
-                    setPressedId(project.id)
-                    setClickRipples(prev => ({
-                      ...prev,
-                      [project.id]: { x, y, active: false, key }
-                    }))
-                    setTimeout(() => {
-                      setClickRipples(prev => ({
-                        ...prev,
-                        [project.id]: { ...(prev[project.id] || { x, y }), active: true, key }
-                      }))
-                    }, 0)
-                    setTimeout(() => {
-                      setPressedId(null)
-                      setClickRipples(prev => {
-                        const next = { ...prev }
-                        delete next[project.id]
-                        return next
-                      })
-                      openModal(project)
-                    }, 120)
-                  }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  pointerEvents: 'none',
-                  opacity: hoveredId === project.id ? 1 : 0,
-                  transition: 'opacity 0.2s ease',
-                }}>
-                  <span style={{
-                    padding: '8px 12px',
-                    backgroundColor: 'rgba(0,0,0,0.6)',
-                    color: 'var(--accent)',
-                    border: '1px solid var(--accent)',
-                    borderRadius: '6px',
-                    fontWeight: 600,
-                    letterSpacing: '0.5px',
-                    transform: pressedId === project.id ? 'scale(0.92)' : (hoveredId === project.id ? 'scale(1.03)' : 'scale(1)'),
-                    transition: 'transform 0.2s ease',
-                  }}>
-                    Click here!
-                  </span>
+                <div className="project-showcase__copy">
+                  <p className="project-showcase__type">{project.type}</p>
+                  <h3>{project.title}</h3>
+                  <p className="project-showcase__description">{project.description}</p>
+
+                  <div className="tech-list" aria-label={`${project.title} technologies`}>
+                    {project.tech.map((technology) => <span key={technology}>{technology}</span>)}
+                  </div>
+
+                  {project.private ? (
+                    <button className="private-project-trigger" type="button" onClick={() => setPrivateDialogOpen(true)}>
+                      <LockKeyhole size={16} aria-hidden="true" />
+                      Private project development
+                    </button>
+                  ) : (
+                    <a className="project-code-link" href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                      <Github size={16} aria-hidden="true" />
+                      View source
+                    </a>
+                  )}
                 </div>
-                {clickRipples[project.id] && (
-                  <span style={{
-                    position: 'absolute',
-                    left: `${clickRipples[project.id].x}px`,
-                    top: `${clickRipples[project.id].y}px`,
-                    width: '10px',
-                    height: '10px',
-                    borderRadius: '999px',
-                    backgroundColor: 'rgba(0, 217, 255, 0.6)',
-                    transform: clickRipples[project.id].active ? 'translate(-50%, -50%) scale(8)' : 'translate(-50%, -50%) scale(0)',
-                    opacity: clickRipples[project.id].active ? 0 : 0.6,
-                    transition: 'transform 300ms ease-out, opacity 300ms ease-out',
-                    pointerEvents: 'none',
-                  }} />
-                )}
-              </div>
 
-              <h3 style={{
-                fontSize: '1.3rem',
-                marginBottom: '8px',
-                color: 'var(--text-primary)',
-              }}>
-                {project.title}
-              </h3>
-
-              <p style={{
-                fontSize: '0.9rem',
-                color: 'var(--text-secondary)',
-                marginBottom: '12px',
-                lineHeight: '1.6',
-              }}>
-                {project.description}
-              </p>
-
-              <div style={{ marginBottom: '16px', padding: '12px', backgroundColor: 'rgba(0, 217, 255, 0.05)', borderRadius: '6px', borderLeft: '3px solid var(--accent)' }}>
-                <p style={{
-                  fontSize: '0.85rem',
-                  color: 'var(--text-secondary)',
-                  lineHeight: '1.5',
-                }}>
-                  <strong style={{ color: 'var(--accent)' }}>Solution:</strong> {project.problemSolution}
-                </p>
-              </div>
-
-              <div style={{ marginBottom: '16px' }}>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)', marginBottom: '8px', fontWeight: '600' }}>TECH STACK</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                  {project.tech.map((tech) => (
-                    <span key={tech} style={{
-                      display: 'inline-block',
-                      padding: '4px 12px',
-                      backgroundColor: 'rgba(0, 102, 255, 0.1)',
-                      color: 'var(--accent)',
-                      borderRadius: '4px',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      border: '1px solid rgba(0, 102, 255, 0.2)',
-                    }}>
-                      {tech}
-                    </span>
-                  ))}
+                <div className="project-showcase__gallery">
+                  <button
+                    className="project-image-button"
+                    type="button"
+                    onClick={() => openGallery(project)}
+                    aria-label={`Open ${project.title} gallery`}
+                  >
+                    <img src={project.images[imageIndex]} alt={`${project.title} preview ${imageIndex + 1}`} loading="lazy" />
+                    <span className="gallery-expand-label"><Maximize2 size={16} aria-hidden="true" /> View gallery</span>
+                  </button>
+                  <div className="gallery-controls">
+                    <button type="button" onClick={() => changeImage(project, -1)} aria-label={`Previous ${project.title} image`}>
+                      <ChevronLeft size={18} />
+                    </button>
+                    <span aria-live="polite">{String(imageIndex + 1).padStart(2, '0')} / {String(project.images.length).padStart(2, '0')}</span>
+                    <button type="button" onClick={() => changeImage(project, 1)} aria-label={`Next ${project.title} image`}>
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              
-              <div style={{ display: 'flex', gap: '12px', marginTop: 'auto' }}>
-                {/* <a href={project.liveLink} style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '10px',
-                  backgroundColor: 'var(--primary)',
-                  color: 'white',
-                  borderRadius: '6px',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease',
-                  textDecoration: 'none',
-                }} onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary-dark)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }} onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}>
-                  <ExternalLink size={16} />
-                  Demo
-                </a> */}
-                <a href={project.githubLink} style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '10px',
-                  backgroundColor: 'transparent',
-                  color: 'var(--accent)',
-                  borderRadius: '6px',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
-                  border: '1px solid var(--accent)',
-                  transition: 'all 0.3s ease',
-                  textDecoration: 'none',
-                }} onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(0, 217, 255, 0.1)'
-                }} onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent'
-                }}>
-                  <Github size={16} />
-                  Code
-                </a>
-              </div>
-            </div>
-          ))}
+              </article>
+            )
+          })}
         </div>
       </div>
 
-      {modalProjectId && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999,
-        }}>
-          <div style={{ position: 'relative', display: 'inline-block' }}>
-            <img
-              src={(projects.find(p => p.id === modalProjectId)?.images || [])[modalIndex] || "/placeholder.svg"}
-              alt="Preview"
-              style={{
-                maxWidth: '90vw',
-                maxHeight: '80vh',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                border: '1px solid var(--accent)',
-                backgroundColor: 'var(--bg-dark)',
-                display: 'block',
-              }}
-            />
-            <button
-              onClick={closeModal}
-              style={{
-                position: 'absolute',
-                top: '-12px',
-                right: '-12px',
-                background: 'rgba(0,0,0,0.6)',
-                border: '1px solid var(--accent)',
-                color: 'var(--accent)',
-                borderRadius: '6px',
-                padding: '6px',
-                cursor: 'pointer',
-                backdropFilter: 'blur(2px)',
-                zIndex: 3,
-              }}
-              aria-label="Close preview"
-            >
-              <X />
-            </button>
-            <button
-              onClick={() => navigateModal('prev')}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '8px',
-                transform: 'translateY(-50%)',
-                background: 'rgba(0,0,0,0.4)',
-                border: '1px solid var(--accent)',
-                color: 'var(--accent)',
-                borderRadius: '6px',
-                padding: '8px',
-                cursor: 'pointer',
-                zIndex: 2,
-              }}
-              aria-label="Previous image"
-            >
-              <ChevronLeft />
-            </button>
-            <button
-              onClick={() => navigateModal('next')}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                right: '8px',
-                transform: 'translateY(-50%)',
-                background: 'rgba(0,0,0,0.4)',
-                border: '1px solid var(--accent)',
-                color: 'var(--accent)',
-                borderRadius: '6px',
-                padding: '8px',
-                cursor: 'pointer',
-                zIndex: 2,
-              }}
-              aria-label="Next image"
-            >
-              <ChevronRight />
-            </button>
+      {modal && createPortal((
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${modal.project.title} image gallery`} onMouseDown={() => setModal(null)}>
+          <div className="lightbox__content" onMouseDown={(event) => event.stopPropagation()}>
+            <img src={modal.project.images[modal.index]} alt={`${modal.project.title} enlarged preview ${modal.index + 1}`} />
+            <button className="lightbox__close" type="button" onClick={() => setModal(null)} aria-label="Close gallery"><X size={20} /></button>
+            <button className="lightbox__previous" type="button" onClick={() => changeModalImage(-1)} aria-label="Previous image"><ChevronLeft size={24} /></button>
+            <button className="lightbox__next" type="button" onClick={() => changeModalImage(1)} aria-label="Next image"><ChevronRight size={24} /></button>
           </div>
         </div>
-      )}
+      ), document.body)}
 
-      <style>{`
-        @media (max-width: 768px) {
-          .section-title {
-            font-size: 2rem;
-          }
-        }
-      `}</style>
+      {privateDialogOpen && createPortal((
+        <div className="private-dialog-backdrop" role="presentation" onMouseDown={() => setPrivateDialogOpen(false)}>
+          <section className="private-dialog" role="dialog" aria-modal="true" aria-labelledby="private-project-title" onMouseDown={(event) => event.stopPropagation()}>
+            <button className="private-dialog__close" type="button" onClick={() => setPrivateDialogOpen(false)} aria-label="Close private project notice"><X size={19} /></button>
+            <AlertTriangle size={34} strokeWidth={1.6} aria-hidden="true" />
+            <h3 id="private-project-title">Private project development</h3>
+            <p>Currently, this project is being developed internally, and the source code is not publicly available. However, you can follow the development process through photos and videos documenting its progress.</p>
+          </section>
+        </div>
+      ), document.body)}
     </section>
   )
 }

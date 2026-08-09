@@ -26,7 +26,7 @@ export default function CertificationsSection() {
   ]
 
   return (
-    <section id="certifications" className="section" style={{ position: 'relative', zIndex: 2 }}>
+    <section id="certifications" className="section presentation-section" style={{ position: 'relative', zIndex: 2 }}>
       <div className="container">
         <h2 className="section-title animate-slide-up" style={{
           fontSize: '3rem',

@@ -22,14 +22,16 @@ export default function StarBackground() {
 
     // Initialize stars
     const stars = []
-    const starCount = Math.min(150, Math.floor((canvas.width * canvas.height) / 8000))
+    const starCount = Math.min(520, Math.max(230, Math.floor((canvas.width * canvas.height) / 3900)))
 
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 1.5,
+        radius: Math.random() * 1.35 + 0.2,
         opacity: Math.random() * 0.5 + 0.5,
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: Math.random() * 0.006 + 0.003,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         originalX: 0,
@@ -48,15 +50,26 @@ export default function StarBackground() {
 
     starsRef.current = stars
 
-    // Mouse move listener
+    // Mouse and touch movement use the same avoidance target.
+    const updatePointerPosition = (x, y) => {
+      mouseRef.current = { x, y }
+    }
+
     const handleMouseMove = (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
+      updatePointerPosition(e.clientX, e.clientY)
+    }
+
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0]
+      if (touch) updatePointerPosition(touch.clientX, touch.clientY)
     }
 
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('touchstart', handleTouchMove, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
 
     // Animation loop
-    const animate = () => {
+    const animate = (time = 0) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.fillStyle = 'rgba(10, 14, 39, 0.1)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -83,17 +96,20 @@ export default function StarBackground() {
         star.x += (star.targetX - star.x) * 0.1
         star.y += (star.targetY - star.y) * 0.1
 
+        const twinkle = 0.15 + ((Math.sin(time * star.twinkleSpeed + star.twinklePhase) + 1) / 2) * 0.85
+        const renderOpacity = star.opacity * twinkle
+
         // Draw star with glow
-        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 3)
-        gradient.addColorStop(0, `rgba(0, 217, 255, ${star.opacity * 0.6})`)
-        gradient.addColorStop(0.5, `rgba(0, 102, 255, ${star.opacity * 0.3})`)
+        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 6)
+        gradient.addColorStop(0, `rgba(235, 251, 255, ${renderOpacity})`)
+        gradient.addColorStop(0.25, `rgba(94, 217, 255, ${renderOpacity * 0.55})`)
         gradient.addColorStop(1, `rgba(0, 102, 255, 0)`)
 
         ctx.fillStyle = gradient
-        ctx.fillRect(star.x - star.radius * 3, star.y - star.radius * 3, star.radius * 6, star.radius * 6)
+        ctx.fillRect(star.x - star.radius * 6, star.y - star.radius * 6, star.radius * 12, star.radius * 12)
 
         // Core star
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`
+        ctx.fillStyle = `rgba(255, 255, 255, ${renderOpacity})`
         ctx.beginPath()
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
         ctx.fill()
@@ -107,6 +123,8 @@ export default function StarBackground() {
     return () => {
       window.removeEventListener('resize', resizeCanvas)
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('touchstart', handleTouchMove)
+      window.removeEventListener('touchmove', handleTouchMove)
     }
   }, [])
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Mail, Linkedin, Github, Download, Send } from 'lucide-react'
-import cvPdf from '../../CV/CV-Ryan.pdf'
+import cvPdf from '../../CV/CV_RYAN-K.pdf'
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="section" style={{ position: 'relative', zIndex: 2 }}>
+    <section id="contact" className="section presentation-section" style={{ position: 'relative', zIndex: 2 }}>
       <div className="container">
         <h2 className="section-title animate-slide-up" style={{
           fontSize: '3rem',
@@ -165,7 +165,7 @@ export default function ContactSection() {
                 onClick={() => {
                   const link = document.createElement('a')
                   link.href = cvPdf
-                  link.download = 'CV-Ryan.pdf'
+                  link.download = 'CV_RYAN-K.pdf'
                   document.body.appendChild(link)
                   link.click()
                   document.body.removeChild(link)
@@ -349,7 +349,7 @@ export default function ContactSection() {
                 }
               }}
             >
-              {submitted ? '✓ Sending Email' : <>
+              {submitted ? 'Opening email client...' : <>
                 <Send size={18} />
                 Send Email
               </>}
@@ -382,5 +382,4 @@ export default function ContactSection() {
     </section>
   )
 }
-
 

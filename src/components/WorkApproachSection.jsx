@@ -2,7 +2,7 @@
 
 export default function WorkApproachSection() {
   return (
-    <section id="work-approach" className="section" style={{ position: 'relative', zIndex: 2 }}>
+    <section id="work-approach" className="section presentation-section" style={{ position: 'relative', zIndex: 2 }}>
       <div
         className="container animate-slide-up"
         style={{
