@@ -12,7 +12,7 @@ const projects = [
     id: 'noelle',
     title: 'NOELLEOS',
     type: 'Private AI Companion',
-    description: 'An evolving desktop AI companion that brings conversational intelligence, long-term memory, voice interaction, and a Live2D avatar together in a coherent local-first system.',
+    description: 'An evolving desktop AI companion that brings conversational intelligence, long-term memory, voice interaction, and a Live3D avatar together in a coherent local-first system.',
     images: [
       ...[1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15].map((number) => projectAsset('noelle', `noelleos (${number}).png`)),
       projectAsset('noelle', 'Voice training.jpeg'),
