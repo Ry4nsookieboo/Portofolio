@@ -23,7 +23,7 @@ export default function AboutSection() {
             </p>
 
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '16px' }}>
-              I enjoy turning ideas into working products — from web platforms and mobile apps to IoT-based projects developed through hands-on experimentation.
+              I enjoy turning ideas into working products, from web platforms and mobile apps to IoT-based projects developed through hands-on experimentation.
             </p>
 
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '16px' }}>
